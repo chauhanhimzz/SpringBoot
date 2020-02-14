@@ -5,7 +5,6 @@ public class Topic {
 	private String id;
 	private String name;
 	private String descpription;
-	//just for test
 	
 	public Topic() {
 		
