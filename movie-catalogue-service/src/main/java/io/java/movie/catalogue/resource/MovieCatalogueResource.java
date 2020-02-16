@@ -25,7 +25,7 @@ public class MovieCatalogueResource {
 	
 	@RequestMapping("/{userId}")
 	public List<CatalogueItem> getCatalogue(@PathVariable("userId")String userId){
-		
+		//----using service discovery -starts
 		UserRating userRating = restTemplate.getForObject("http://movie-data-service/data/users/"+userId,
 				UserRating.class);
 		List<CatalogueItem> catItems = new ArrayList<CatalogueItem>();
@@ -37,13 +37,15 @@ public class MovieCatalogueResource {
 			catItems.add(ci);
 		}
 		
+		//----using service discovery - ends
+		
 		//List<Rating> ratings = new ArrayList<Rating>();
 		// ratings = Arrays.asList(
 		//	new Rating("1234","3"),
 		//	new Rating("5678","4")
 		//		);
 		
-		//----------------code to use normal rest template and weblclient-------------
+		//----------------code to use normal rest template and weblclient starts
 		/*UserRating userRating = restTemplate.getForObject("http://localhost:8383/data/users/"+userId,
 				UserRating.class);
 		List<CatalogueItem> catItems = new ArrayList<CatalogueItem>();
@@ -58,7 +60,7 @@ public class MovieCatalogueResource {
 			CatalogueItem ci = new CatalogueItem(movie.getName(), "test", rating.getRating());
 			catItems.add(ci);
 		}*/
-		//----------------code to use normal rest template and weblclient-------------
+		//----------------code to use normal rest template and weblclient ends
 		//use this code with restTemplate object
 		//for(Rating rating : ratings) {
 		//	Movie movie = restTemplate.getForObject("http://localhost:8282/movies/"+rating.getMovieId(), Movie.class);
