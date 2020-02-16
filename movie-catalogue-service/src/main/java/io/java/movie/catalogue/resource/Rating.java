@@ -5,6 +5,10 @@ public class Rating {
 	private String movieId;
 	private String rating;
 	
+	public Rating() {
+		
+	}
+	
 	public Rating(String movieId, String rating) {
 		super();
 		this.movieId = movieId;

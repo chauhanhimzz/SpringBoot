@@ -17,22 +17,24 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RequestMapping("/catalog")
 public class MovieCatalogueResource {
 	
-	//@Autowired
-	//RestTemplate restTemplate;
+	@Autowired
+	RestTemplate restTemplate;
 	
 	@Autowired
 	WebClient.Builder builder;
 	
 	@RequestMapping("/{userId}")
 	public List<CatalogueItem> getCatalogue(@PathVariable("userId")String userId){
-		
-		List<Rating> ratings = Arrays.asList(
-			new Rating("1234","3"),
-			new Rating("5678","4")
-				);
+		//List<Rating> ratings = new ArrayList<Rating>();
+		// ratings = Arrays.asList(
+		//	new Rating("1234","3"),
+		//	new Rating("5678","4")
+		//		);
+		UserRating userRating = restTemplate.getForObject("http://localhost:8383/data/users/"+userId,
+				UserRating.class);
 		List<CatalogueItem> catItems = new ArrayList<CatalogueItem>();
 		
-		for (Rating rating : ratings) {
+		for (Rating rating : userRating.getUserRating()) {
 			Movie movie = builder.build()
 					             .get()
 					             .uri("http://localhost:8282/movies/" + rating.getMovieId())
