@@ -25,21 +25,20 @@ public class MovieCatalogueResource {
 	@Autowired
 	WebClient.Builder builder;
 	
-	List<CatalogueItem> getFallbackCatatlogue(@PathVariable("userId")String userId){
-		return Arrays.asList(new CatalogueItem("nomovie", "", "0"));
-	}
+	@Autowired
+	MovieInfoService movieInfo;
+	
+	@Autowired
+	UserRatingService userRatingser;
 	
 	@RequestMapping("/{userId}")
-	@HystrixCommand(fallbackMethod="getFallbackCatatlogue")
+	//@HystrixCommand(fallbackMethod="getFallbackCatatlogue")
 	public List<CatalogueItem> getCatalogue(@PathVariable("userId")String userId){
-		//----using service discovery -starts
-		UserRating userRating = restTemplate.getForObject("http://movie-data-service/data/users/"+userId,
-				UserRating.class);
+		UserRating userRating = userRatingser.getUserRating(userId);
 		List<CatalogueItem> catItems = new ArrayList<CatalogueItem>();
 		
 		for (Rating rating : userRating.getUserRating()) {
-			Movie movie = restTemplate.getForObject("http://movie-info-service/movies/" + rating.getMovieId(),
-					Movie.class);
+			Movie movie = movieInfo.getCatalogueItem(rating);
 			CatalogueItem ci = new CatalogueItem(movie.getName(), "test", rating.getRating());
 			catItems.add(ci);
 		}
@@ -76,5 +75,8 @@ public class MovieCatalogueResource {
 		//}
 	return catItems;
 	}
-
+	
+	List<CatalogueItem> getFallbackCatatlogue(@PathVariable("userId")String userId){
+		return Arrays.asList(new CatalogueItem("nomovie", "", "0"));
+	}
 }
