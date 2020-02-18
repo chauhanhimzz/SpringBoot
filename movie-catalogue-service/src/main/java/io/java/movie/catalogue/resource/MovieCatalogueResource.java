@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+
 @RestController
 @RequestMapping("/catalog")
 public class MovieCatalogueResource {
@@ -23,7 +25,12 @@ public class MovieCatalogueResource {
 	@Autowired
 	WebClient.Builder builder;
 	
+	List<CatalogueItem> getFallbackCatatlogue(@PathVariable("userId")String userId){
+		return Arrays.asList(new CatalogueItem("nomovie", "", "0"));
+	}
+	
 	@RequestMapping("/{userId}")
+	@HystrixCommand(fallbackMethod="getFallbackCatatlogue")
 	public List<CatalogueItem> getCatalogue(@PathVariable("userId")String userId){
 		//----using service discovery -starts
 		UserRating userRating = restTemplate.getForObject("http://movie-data-service/data/users/"+userId,
