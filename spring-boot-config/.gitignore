@@ -1,0 +1,9 @@
+.settings/*
+target/*
+.classpath
+.project
+dist
+cache.properties
+TAGS
+derby.log
+.mvn/*
