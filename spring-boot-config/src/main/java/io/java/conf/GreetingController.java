@@ -28,7 +28,7 @@ public class GreetingController {
 	
 	@GetMapping("/greeting")
 	public String greeting() {
-		return greetingMsg + description + alp + mymap + conf.getPort();
+		return greetingMsg + description + alp + mymap + conf.getPort() +conf.getUser() + conf.getPwd();
 	}
 
 }

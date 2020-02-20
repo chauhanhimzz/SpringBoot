@@ -1,0 +1,16 @@
+app:
+  name: My app
+  description: welcome to ${app.name}
+  
+my:
+ greetings: Hello World
+ list:
+   values:one, two, three1
+   
+db:
+ url: connectstr
+ port: 12001
+ user: aaa
+ pwd: ddd
+ 
+management.endpoints.web.exposure.include: "*"     
