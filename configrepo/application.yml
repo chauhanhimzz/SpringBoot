@@ -1,0 +1,8 @@
+db:
+ url: connectstrfromconfserv
+ port: 12001
+ user: aaafromconfigser
+ pwd: dddfromconfiserf
+
+
+
