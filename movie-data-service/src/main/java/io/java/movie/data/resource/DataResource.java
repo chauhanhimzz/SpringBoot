@@ -19,7 +19,7 @@ public class DataResource {
 	@RequestMapping("users/{userId}")
 	public UserRating getRatings(@PathVariable("userId") String userId) {
 		List<Rating> ratings = Arrays.asList(
-				new Rating("1234", "40"),
+				new Rating("1234", "4"),
 				new Rating("5678", "12")
 				);
 		UserRating ur = new UserRating();
